@@ -119,6 +119,7 @@ public class FirstAndFollow {
 						for (int l = 0; l < productions.get(k).size(); l++) {
 
 							if (src.equals(productions.get(k).get(l))) {
+								// System.out.println(productions.get(k)+"--------------"+"---------"+giveMeSource(productions.get(k), grammer));
 								if (l + 1 < productions.get(k).size()
 										&& grammer.terminals.contains(productions.get(k).get(l + 1))) {
 									if (!temp.equals(""))
@@ -148,14 +149,12 @@ public class FirstAndFollow {
 									}
 								}
 
-								if (l + 1 == productions.get(k).size()) {
+								if (l + 1 >= productions.get(k).size()) {
 									if (!temp.equals(""))
 										temp += ",";
 
-									if (!firstTillFollw(productions.get(k), -1,
-											giveMeSource(productions.get(k), grammer)).contains("kkk")) {
-										temp += firstTillFollw(productions.get(k), -1,
-												giveMeSource(productions.get(k), grammer));
+									if (!firstTillFollw(productions.get(k), -1,giveMeSource(productions.get(k), grammer)).contains("kkk")) {
+										temp += firstTillFollw(productions.get(k), -1,giveMeSource(productions.get(k), grammer));
 										x = true;
 										break;
 
@@ -183,7 +182,9 @@ public class FirstAndFollow {
 	}
 
 	public static String firstTillFollw(ArrayList<String> x, int i, String src) {
-
+		if (i == -1) {
+			i = x.size() - 1;
+		}
 		String out = "";
 		for (int j = i; j < x.size(); j++) {
 
@@ -216,13 +217,14 @@ public class FirstAndFollow {
 
 	public static String giveMeSource(ArrayList<String> x, grammer grammer) {
 		String s = arraylistToString(x);
+		s = s.replaceAll(',' + "", "");
 		for (int i = 0; i < grammer.grammer.size(); i++) {
-			for (int j = 0; j < grammer.grammer.get(i).production.size(); j++) {
-				if (grammer.grammer.get(i).production.contains(s))
-					;
+			if (grammer.grammer.get(i).production.contains(s)) {
 				return grammer.grammer.get(i).source;
+
 			}
 		}
+
 		return null;
 
 	}
