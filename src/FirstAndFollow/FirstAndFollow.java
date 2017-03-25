@@ -119,7 +119,8 @@ public class FirstAndFollow {
 						for (int l = 0; l < productions.get(k).size(); l++) {
 
 							if (src.equals(productions.get(k).get(l))) {
-								// System.out.println(productions.get(k)+"--------------"+"---------"+giveMeSource(productions.get(k), grammer));
+								// System.out.println(productions.get(k)+"--------------"+"---------"+giveMeSource(productions.get(k),
+								// grammer));
 								if (l + 1 < productions.get(k).size()
 										&& grammer.terminals.contains(productions.get(k).get(l + 1))) {
 									if (!temp.equals(""))
@@ -153,8 +154,10 @@ public class FirstAndFollow {
 									if (!temp.equals(""))
 										temp += ",";
 
-									if (!firstTillFollw(productions.get(k), -1,giveMeSource(productions.get(k), grammer)).contains("kkk")) {
-										temp += firstTillFollw(productions.get(k), -1,giveMeSource(productions.get(k), grammer));
+									if (!firstTillFollw(productions.get(k), -1,
+											giveMeSource(productions.get(k), grammer)).contains("kkk")) {
+										temp += firstTillFollw(productions.get(k), -1,
+												giveMeSource(productions.get(k), grammer));
 										x = true;
 										break;
 
@@ -173,6 +176,10 @@ public class FirstAndFollow {
 					ArrayList<String> set = new ArrayList<String>(Arrays.asList(temp.split(",")));
 					set = removeDuplicates(set);
 					out.setOfFollow.addAll(replaceEpislon(set));
+					if (containEpsilon(out.setOfFollow)) {
+						out.setOfFollow = replaceEpislon(out.setOfFollow);
+					}
+					out.setOfFollow = removeDuplicates(out.setOfFollow);
 					follow.add(out);
 				}
 			}
@@ -194,9 +201,9 @@ public class FirstAndFollow {
 			if ((i < x.size() - 1))
 				out += arraylistToString(getFirstList(x.get(j)));
 
-			if(i==x.size()-1&&inFollow(x.get(j)))
-				out+=arraylistToString(getFirstList(x.get(j)));
-			
+			if (i == x.size() - 1 && inFollow(x.get(j)))
+				out += arraylistToString(getFirstList(x.get(j)));
+
 			if (!out.equals(""))
 				out += ",";
 
@@ -442,7 +449,7 @@ public class FirstAndFollow {
 	}
 
 	public static void main(String[] args) throws Exception {
-		grammer grammer = new grammer("Sample4.in");
+		grammer grammer = new grammer("Sample5.in");
 		First(grammer);
 		Follow(grammer);
 		printFirst(first);
