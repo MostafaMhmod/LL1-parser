@@ -119,8 +119,6 @@ public class FirstAndFollow {
 						for (int l = 0; l < productions.get(k).size(); l++) {
 
 							if (src.equals(productions.get(k).get(l))) {
-								// System.out.println(productions.get(k)+"--------------"+"---------"+giveMeSource(productions.get(k),
-								// grammer));
 								if (l + 1 < productions.get(k).size()
 										&& grammer.terminals.contains(productions.get(k).get(l + 1))) {
 									if (!temp.equals(""))
@@ -180,6 +178,7 @@ public class FirstAndFollow {
 						out.setOfFollow = replaceEpislon(out.setOfFollow);
 					}
 					out.setOfFollow = removeDuplicates(out.setOfFollow);
+					out.setOfFollow = removeAllEmptyChars(out.setOfFollow);
 					follow.add(out);
 				}
 			}
@@ -187,6 +186,7 @@ public class FirstAndFollow {
 		}
 
 	}
+	
 
 	public static String firstTillFollw(ArrayList<String> x, int i, String src) {
 		if (i == -1) {
@@ -222,6 +222,16 @@ public class FirstAndFollow {
 		}
 
 		return out;
+
+	}
+	
+	public static ArrayList<String> removeAllEmptyChars(ArrayList<String> x) {
+		for (int i = 0; i < x.size(); i++) {
+			if(x.get(i).equals("")){
+				x.remove(i);
+			}
+		}
+		return x;
 
 	}
 
@@ -449,7 +459,7 @@ public class FirstAndFollow {
 	}
 
 	public static void main(String[] args) throws Exception {
-		grammer grammer = new grammer("Sample5.in");
+		grammer grammer = new grammer("Sample4.in");
 		First(grammer);
 		Follow(grammer);
 		printFirst(first);
