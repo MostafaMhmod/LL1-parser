@@ -1,5 +1,5 @@
 Follow(E):[$, )]
-Follow(E'):[+, $, ), $]
+Follow(E'):[$, )]
 Follow(T):[+, $, ), $]
-Follow(T'):[*, +, $, ), $]
+Follow(T'):[+, $, )]
 Follow(F):[*, +, $, ), $]

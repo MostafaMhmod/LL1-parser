@@ -191,9 +191,12 @@ public class FirstAndFollow {
 			if (!out.equals(""))
 				out += ",";
 
-			if ((i <= x.size() - 1))
+			if ((i < x.size() - 1))
 				out += arraylistToString(getFirstList(x.get(j)));
 
+			if(i==x.size()-1&&inFollow(x.get(j)))
+				out+=arraylistToString(getFirstList(x.get(j)));
+			
 			if (!out.equals(""))
 				out += ",";
 
