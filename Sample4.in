@@ -1,0 +1,12 @@
+E,E',T,T',F
+(,),id,number,+,*
+E
+TE'
+T
+FT'
+F
+(E)|id|number
+E'
++TE'|!
+T'
+*FT'|!

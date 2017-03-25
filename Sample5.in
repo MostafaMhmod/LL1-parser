@@ -1,0 +1,10 @@
+S,A,B,C
+a,b,c
+S
+SAB|SBC|!
+A
+aAa|!
+B
+bB|!
+C
+cC|!
