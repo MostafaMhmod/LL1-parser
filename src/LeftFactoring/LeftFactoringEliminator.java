@@ -31,17 +31,6 @@ public class LeftFactoringEliminator {
 			output.grammer.add(out[0]);
 			x = commonPrefixIndexer(out[1]);
 
-			// Testing the rules so far
-
-			// System.out.println(out[0].source);
-			// System.out.println(out[0].production);
-			// System.out.println(out[1].source);
-			// System.out.println(out[1].production);
-			//
-			// x = commonPrefixIndexer(out[1]);
-			// System.out.println(x[0] + "" + x[1]);
-
-			// removing all the remaining left factors
 
 			rule dashed = out[1];
 			int y[] = { Integer.MIN_VALUE, Integer.MIN_VALUE };
@@ -135,8 +124,6 @@ public class LeftFactoringEliminator {
 			}
 
 			if (primary.production.size() == 0)
-				// if (!(primary.production.get(primary.production.size() -
-				// 1).equals(prefix + "'")))
 				primary.production.add(prefix + dashed.source);
 			temp = rule.production.get(j);
 			if ((!(compare.equals(prefix))) && !(temp.substring(prefix.length() - 1).equals(""))) {
@@ -162,11 +149,9 @@ public class LeftFactoringEliminator {
 
 			for (int k = j + 1; k < rule.production.size(); k++) {
 				temp = rule.production.get(k);
-				// System.out.println(temp);
 				test.add(temp);
 				if (commonPrefix(test).equals("")) {
 					test.remove(test.size() - 1);
-					// System.out.println(test);
 				}
 
 				else if (!(commonPrefix(test).equals(""))) {
@@ -177,8 +162,6 @@ public class LeftFactoringEliminator {
 				if (counter > biggestpossibleNumberOfCombinations) {
 					biggestpossibleNumberOfCombinations = counter;
 					biggestpossibleNumberOfCombinationsIndex = j;
-					// System.out.println(test);
-					// System.out.println(j);
 
 				}
 
@@ -194,7 +177,6 @@ public class LeftFactoringEliminator {
 			x[1] = biggestpossibleNumberOfCombinationsIndex;
 
 		}
-		// System.out.println(biggestpossibleNumberOfCombinations);
 
 		return x;
 
