@@ -4,8 +4,8 @@ import java.util.ArrayList;
 
 public class rule {
 
-	String source;
-	ArrayList<String> production = new ArrayList<String>();
+	public String source;
+	public ArrayList<String> production = new ArrayList<String>();
 
 	public rule(String source, ArrayList<String> destinationList) {
 		source = this.source;

@@ -3,8 +3,8 @@ package FirstAndFollow;
 import java.util.ArrayList;
 
 public class follow {
-	String variable;
-	ArrayList<String> setOfFollow = new ArrayList<String>();
+	public String variable;
+	public ArrayList<String> setOfFollow = new ArrayList<String>();
 
 	public follow(String variable, ArrayList<String> setOfFollow) {
 		variable = this.variable;
