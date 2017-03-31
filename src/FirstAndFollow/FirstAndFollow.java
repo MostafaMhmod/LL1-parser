@@ -8,8 +8,8 @@ import java.util.Arrays;
 
 public class FirstAndFollow {
 
-	static ArrayList<first> first = new ArrayList<first>();
-	static ArrayList<follow> follow = new ArrayList<follow>();
+	public static ArrayList<first> first = new ArrayList<first>();
+	public static ArrayList<follow> follow = new ArrayList<follow>();
 
 	public static void First(grammer grammer) {
 		String var = "";
@@ -457,17 +457,19 @@ public class FirstAndFollow {
 		return t;
 	}
 
-	public static void main(String[] args) throws Exception {
-		grammer grammer = new grammer("Sample4.in");
-		First(grammer);
-		Follow(grammer);
-		printFirst(first);
-		printFollow(follow);
-
-		System.out.println();
-		System.out.println("OUTPUT IS NOW IN first.OUT AND follow.out FILES");
-		writeFirstInFile(first);
-		writeFollowInFile(follow);
-
-	}
+	// For testing
+	
+//	public static void main(String[] args) throws Exception {
+//		grammer grammer = new grammer("Sample4.in");
+//		First(grammer);
+//		Follow(grammer);
+//		printFirst(first);
+//		printFollow(follow);
+//
+//		System.out.println();
+//		System.out.println("OUTPUT IS NOW IN first.OUT AND follow.out FILES");
+//		writeFirstInFile(first);
+//		writeFollowInFile(follow);
+//
+//	}
 }
