@@ -186,7 +186,6 @@ public class FirstAndFollow {
 		}
 
 	}
-	
 
 	public static String firstTillFollw(ArrayList<String> x, int i, String src) {
 		if (i == -1) {
@@ -224,10 +223,10 @@ public class FirstAndFollow {
 		return out;
 
 	}
-	
+
 	public static ArrayList<String> removeAllEmptyChars(ArrayList<String> x) {
 		for (int i = 0; i < x.size(); i++) {
-			if(x.get(i).equals("")){
+			if (x.get(i).equals("")) {
 				x.remove(i);
 			}
 		}

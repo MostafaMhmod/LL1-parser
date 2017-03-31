@@ -1,0 +1,6 @@
+		(		)		id		number		+		*		$		
+E		TE'		null		TE'		TE'		null		null		null		
+E'		null		!		null		null		+TE'		null		!		
+T		FT'		null		FT'		FT'		null		null		null		
+T'		null		!		null		null		!		*FT'		!		
+F		(E)		null		id		number		null		null		null

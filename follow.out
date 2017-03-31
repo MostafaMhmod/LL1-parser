@@ -1,5 +1,3 @@
-Follow(E):[$, )]
-Follow(E'):[$, )]
-Follow(T):[+, $, )]
-Follow(T'):[+, $, )]
-Follow(F):[*, +, $, )]
+Follow(E):[$]
+Follow(E'):[]
+Follow(T):[]
