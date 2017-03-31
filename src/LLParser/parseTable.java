@@ -8,9 +8,9 @@ import FirstAndFollow.follow;
 import FirstAndFollow.grammer;
 
 public class parseTable {
-	static ArrayList<first> first = new ArrayList<first>();
-	static ArrayList<follow> follow = new ArrayList<follow>();
-	static String table[][];
+	public static ArrayList<first> first = new ArrayList<first>();
+	public static ArrayList<follow> follow = new ArrayList<follow>();
+	public static String table[][];
 
 	public static void filler(grammer grammar) {
 
