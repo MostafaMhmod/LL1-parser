@@ -11,7 +11,7 @@ public class FirstAndFollow {
 	public static ArrayList<first> first = new ArrayList<first>();
 	public static ArrayList<follow> follow = new ArrayList<follow>();
 
-	public static void First(grammer grammer) {
+	public void First(grammer grammer) {
 		String var = "";
 		String firstValue = "";
 
@@ -98,7 +98,7 @@ public class FirstAndFollow {
 
 	}
 
-	public static void Follow(grammer grammer) {
+	public void Follow(grammer grammer) {
 		String temp = "";
 
 		for (int i = 0; i < grammer.nonTerminals.size(); i++) {
@@ -134,7 +134,7 @@ public class FirstAndFollow {
 										temp += ",";
 
 									if (!firstTillFollw(productions.get(k), l + 1,
-											giveMeSource(productions.get(k), grammer)).contains("kkk")) {
+											giveMeSource(productions.get(k), grammer)).contains("ERROR")) {
 										temp += firstTillFollw(productions.get(k), l + 1,
 												giveMeSource(productions.get(k), grammer));
 										x = true;
@@ -142,7 +142,7 @@ public class FirstAndFollow {
 
 									}
 									if (firstTillFollw(productions.get(k), l + 1,
-											giveMeSource(productions.get(k), grammer)).contains("kkk")) {
+											giveMeSource(productions.get(k), grammer)).contains("ERROR")) {
 
 										break;
 									}
@@ -153,7 +153,7 @@ public class FirstAndFollow {
 										temp += ",";
 
 									if (!firstTillFollw(productions.get(k), -1,
-											giveMeSource(productions.get(k), grammer)).contains("kkk")) {
+											giveMeSource(productions.get(k), grammer)).contains("ERROR")) {
 										temp += firstTillFollw(productions.get(k), -1,
 												giveMeSource(productions.get(k), grammer));
 										x = true;
@@ -209,7 +209,7 @@ public class FirstAndFollow {
 			if (containEpsilon(getFirstList(x.get(j)))) {
 				if (i == x.size() - 1) {
 					if (getFollowList(src) == null) {
-						return "kkk";
+						return "ERROR";
 					}
 					if (getFollowList(src) != null) {
 						out += arraylistToString(getFollowList(src));
@@ -307,7 +307,6 @@ public class FirstAndFollow {
 		if (grammer.nonTerminals.contains(source) && grammer.nonTerminals.contains(temp.get(0).get(0))) {
 			boolean containEpsilon = false;
 			for (int i = 0; i < temp.size(); i++) {
-				// System.out.println(temp.get(i));
 
 				if (containEpsilon(temp.get(i))) {
 					containEpsilon = true;
@@ -458,18 +457,18 @@ public class FirstAndFollow {
 	}
 
 	// For testing
-	
-//	public static void main(String[] args) throws Exception {
-//		grammer grammer = new grammer("Sample4.in");
-//		First(grammer);
-//		Follow(grammer);
-//		printFirst(first);
-//		printFollow(follow);
-//
-//		System.out.println();
-//		System.out.println("OUTPUT IS NOW IN first.OUT AND follow.out FILES");
-//		writeFirstInFile(first);
-//		writeFollowInFile(follow);
-//
-//	}
+
+	// public static void main(String[] args) throws Exception {
+	// grammer grammer = new grammer("Sample4.in");
+	// First(grammer);
+	// Follow(grammer);
+	// printFirst(first);
+	// printFollow(follow);
+	//
+	// System.out.println();
+	// System.out.println("OUTPUT IS NOW IN first.OUT AND follow.out FILES");
+	// writeFirstInFile(first);
+	// writeFollowInFile(follow);
+	//
+	// }
 }
