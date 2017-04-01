@@ -138,21 +138,22 @@ public class parseTable {
 		System.out.println();
 	}
 
-	@SuppressWarnings("static-access")
-	public static void main(String[] args) throws Exception {
-		grammer grammar = new grammer("Sample4.in");
-		FirstAndFollow f = new FirstAndFollow();
-		f.First(grammar);
-		f.Follow(grammar);
-		first = f.first;
-		follow = f.follow;
-		// f.printFirst(first);
-		// f.printFollow(follow);
-		table = new String[grammar.nonTerminals.size() + 1][grammar.terminals.size() + 2];
-		filler(grammar);
-
-		for (String[] row : table) {
-			printRow(row);
-		}
-	}
+	// @SuppressWarnings("static-access")
+	// public static void main(String[] args) throws Exception {
+	// grammer grammar = new grammer("Sample4.in");
+	// FirstAndFollow f = new FirstAndFollow();
+	// f.First(grammar);
+	// f.Follow(grammar);
+	// first = f.first;
+	// follow = f.follow;
+	// // f.printFirst(first);
+	// // f.printFollow(follow);
+	// table = new String[grammar.nonTerminals.size() +
+	// 1][grammar.terminals.size() + 2];
+	// filler(grammar);
+	//
+	// for (String[] row : table) {
+	// printRow(row);
+	// }
+	// }
 }
