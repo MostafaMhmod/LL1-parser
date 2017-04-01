@@ -1,7 +1,9 @@
 package LLParser;
 
+import java.io.FileWriter;
+import java.io.IOException;
+import java.io.PrintWriter;
 import java.util.ArrayList;
-import java.util.Iterator;
 import java.util.Stack;
 
 import FirstAndFollow.FirstAndFollow;
@@ -9,51 +11,54 @@ import FirstAndFollow.grammer;
 
 public class LL1Parser {
 	public static String table[][];
-	// public static derivations d = new derivations();
 	public static ArrayList<derivations> output = new ArrayList<derivations>();
 
 	public static void parser(grammer grammar, ArrayList<String> input) {
+
 		Stack<String> pda = new Stack<String>();
+		boolean error = false;
 		boolean first = true;
-		// System.out.println(input);
+
 		for (int a = 0; a < input.size(); a++) {
+
 			boolean done = false;
 			while (!done) {
+				if (error)
+					break;
+
 				for (int i = 0; i < table.length; i++) {
 					for (int j = 0; j < table[i].length; j++) {
 						String var = input.get(a);
 						if (table[0][j].equals(var)) {
-							if (table[i][j] != null && !(table[i][0].equals(""))) {
-								if (first) {
+
+							if (!(table[i][0].equals(""))) {
+								if (table[i][j] != null && first) {
 									pda.push(table[i][0]);
 									first = false;
 								}
 
-								// System.out.println("var->"+var);
-								// System.out.println(pda);
-
-								if (!first && !(table[i][j].equals(var)) && table[i][0].equals(pda.peek())) {
+								if (table[i][j] != null && !pda.isEmpty() && !first && !(table[i][j].equals(var))
+										&& table[i][0].equals(pda.peek())) {
 									derivations d = new derivations();
 									d.input = var;
 									d.topOfStack = pda.pop();
 									d.out = table[i][j];
 
-									// System.out.println(d.out);
-
 									ArrayList<String> temp = new ArrayList<String>();
 									temp.add(d.out);
 									ArrayList<ArrayList<String>> productions = splitProduction(temp, grammar);
-									// System.out.println(productions);
 
 									for (int k = productions.get(0).size() - 1; k >= 0; k--) {
 										if (!(productions.get(0).get(k)).equals("!"))
 											pda.push(productions.get(0).get(k));
+
 									}
 
 									output.add(d);
 
 								}
-								if ((!first && table[i][j].equals(var)) && table[i][0].equals(pda.peek())) {
+								if (table[i][j] != null && !pda.isEmpty() && (!first && table[i][j].equals(var))
+										&& table[i][0].equals(pda.peek())) {
 									derivations d = new derivations();
 									d.input = var;
 									d.out = table[i][j];
@@ -65,46 +70,66 @@ public class LL1Parser {
 									for (int k = productions.get(0).size() - 1; k >= 0; k--) {
 										if (!(productions.get(0).get(k)).equals("!"))
 											pda.push(productions.get(0).get(k));
+
 									}
 
 									output.add(d);
 
 								}
-								if (!pda.isEmpty())
-									if (grammar.terminals.contains(pda.peek()) && pda.peek().equals(var)) {
-										// System.out.println(pda.peek());
-										derivations d = new derivations();
-										d.input = "";
-										d.out = pda.peek();
-										d.topOfStack = pda.pop();
-										// System.out.println("hnaa-->"+pda.peek());
-										done = true;
-										output.add(d);
+								if (table[i][j] != null && grammar.terminals.contains(pda.peek())
+										&& pda.peek().equals(var)) {
+									derivations d = new derivations();
+									d.input = "";
+									d.out = pda.peek();
+									d.topOfStack = pda.pop();
+									done = true;
+									output.add(d);
 
-									}
-
+								}
+								if (table[i][j] == null && table[0][j].equals(var) && table[i][0].equals(pda.peek())
+										&& !done) {
+									error = true;
+								}
 							}
+
 						}
+					}
+
+				}
+
+			}
+
+		}
+
+		if (!error)
+			dollarPrsing(pda, grammar);
+		if (error) {
+			output = null;
+		}
+	}
+
+	public static boolean haveNonEpislon(String table[][], String var) {
+		for (int i = 0; i < table.length; i++) {
+			for (int j = 0; j < table[i].length; j++) {
+				if (table[0][j].equals(var)) {
+					if (table[i][j] != null && (!table[i][j].equals("!")) && i > 0) {
+						return true;
 					}
 				}
 			}
 		}
-
-		// System.out.println(pda);
-
-		dollarPrsing(pda, grammar);
+		return false;
 	}
 
 	public static void dollarPrsing(Stack<String> pda, grammer grammar) {
 		while (!pda.isEmpty()) {
-			
+
 			for (int i = 0; i < table.length; i++) {
 				for (int j = 0; j < table[i].length; j++) {
 					if (table[0][j].equals("$")) {
 						if (table[i][j] != null && !(table[i][0].equals(""))) {
 
-							if(!pda.isEmpty())
-							if (table[i][0].equals(pda.peek())) {
+							if (!pda.isEmpty() && table[i][0].equals(pda.peek())) {
 								derivations d = new derivations();
 								d.input = "$";
 								d.topOfStack = pda.pop();
@@ -154,15 +179,55 @@ public class LL1Parser {
 	}
 
 	public static void printOutput(ArrayList<derivations> output) {
-		for (int i = 0; i < output.size(); i++) {
-			System.out.print(output.get(i).topOfStack);
-			if (!output.get(i).input.isEmpty())
-				System.out.print("[" + output.get(i).input + "]" + "--->" + output.get(i).out);
-			else
-				System.out.print("--->" + output.get(i).out);
+		if (output != null)
+			for (int i = 0; i < output.size(); i++) {
+				System.out.print(output.get(i).topOfStack);
+				if (!output.get(i).input.isEmpty())
+					System.out.print("[" + output.get(i).input + "]" + "--->" + output.get(i).out);
+				else
+					System.out.print("--->" + output.get(i).out);
 
-			System.out.println();
+				System.out.println();
+			}
+		else
+			System.out.println("Parse error");
+	}
+
+	public static void writeOutputInFile(ArrayList<derivations> output) throws IOException {
+		PrintWriter out = new PrintWriter(new FileWriter("Input.out"));
+
+		if (output != null)
+			for (int i = 0; i < output.size(); i++) {
+				out.print(output.get(i).topOfStack);
+				if (!output.get(i).input.isEmpty())
+					out.print("[" + output.get(i).input + "]" + "--->" + output.get(i).out);
+				else
+					out.print("--->" + output.get(i).out);
+
+				out.println();
+			}
+		else
+			out.println("Parse error");
+
+		out.close();
+
+	}
+
+	@SuppressWarnings("static-access")
+	public static void printTable(parseTable t) {
+		for (String[] row : t.table) {
+			t.printRow(row);
 		}
+	}
+
+	@SuppressWarnings("static-access")
+	public static void writeTableInFile(parseTable t) throws IOException {
+		PrintWriter out = new PrintWriter(new FileWriter("Table.out"));
+
+		for (String[] row : t.table) {
+			out.println(t.printRowInFile(row));
+		}
+		out.close();
 	}
 
 	@SuppressWarnings("static-access")
@@ -174,21 +239,31 @@ public class LL1Parser {
 		parseTable t = new parseTable();
 		t.first = f.first;
 		t.follow = f.follow;
-		// f.printFirst(t.first);
-		// f.printFollow(t.follow);
 		t.table = new String[grammar.nonTerminals.size() + 1][grammar.terminals.size() + 2];
 		t.filler(grammar);
-		for (String[] row : t.table) {
-			t.printRow(row);
-		}
+
+		printTable(t);
+		writeTableInFile(t);
+		System.out.println();
+		System.out.println("NOW THE TABLE IS IN THE TABLE.OUT FILE");
+		System.out.println();
+
 		table = t.table;
 
+		// *************************************************
+		// **********Change the cases from Here*************
+		// *************************************************
+
 		inputParser n = new inputParser("Input1.in", grammar);
+
 		System.out.println("__________________________________________________________");
 		System.out.println();
 
 		parser(grammar, n.elements);
-		 printOutput(output);
+		printOutput(output);
+		writeOutputInFile(output);
+		System.out.println();
+		System.out.println("NOW THE OUTPUT IS IN THE INPUT.OUT FILE");
 
 	}
 }

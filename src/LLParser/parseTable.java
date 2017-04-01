@@ -2,7 +2,6 @@ package LLParser;
 
 import java.util.ArrayList;
 
-import FirstAndFollow.FirstAndFollow;
 import FirstAndFollow.first;
 import FirstAndFollow.follow;
 import FirstAndFollow.grammer;
@@ -136,6 +135,15 @@ public class parseTable {
 			System.out.print("\t");
 		}
 		System.out.println();
+	}
+	
+	public static String printRowInFile(String[] row){
+		String x ="";
+		for (String i : row) {
+			x=(i);
+			x+=("\t");
+		}
+		return x;
 	}
 
 	// @SuppressWarnings("static-access")
