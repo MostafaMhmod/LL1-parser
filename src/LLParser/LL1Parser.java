@@ -15,7 +15,7 @@ public class LL1Parser {
 	public static void parser(grammer grammar, ArrayList<String> input) {
 		Stack<String> pda = new Stack<String>();
 		boolean first = true;
-//		System.out.println(input);
+		// System.out.println(input);
 		for (int a = 0; a < input.size(); a++) {
 			boolean done = false;
 			while (!done) {
@@ -89,9 +89,44 @@ public class LL1Parser {
 				}
 			}
 		}
-		System.out.println(pda);
-		// input.add("$");
 
+		// System.out.println(pda);
+
+		dollarPrsing(pda, grammar);
+	}
+
+	public static void dollarPrsing(Stack<String> pda, grammer grammar) {
+		while (!pda.isEmpty()) {
+			
+			for (int i = 0; i < table.length; i++) {
+				for (int j = 0; j < table[i].length; j++) {
+					if (table[0][j].equals("$")) {
+						if (table[i][j] != null && !(table[i][0].equals(""))) {
+
+							if(!pda.isEmpty())
+							if (table[i][0].equals(pda.peek())) {
+								derivations d = new derivations();
+								d.input = "$";
+								d.topOfStack = pda.pop();
+								d.out = table[i][j];
+
+								ArrayList<String> temp = new ArrayList<String>();
+								temp.add(d.out);
+								ArrayList<ArrayList<String>> productions = splitProduction(temp, grammar);
+
+								for (int k = productions.get(0).size() - 1; k >= 0; k--) {
+									if (!(productions.get(0).get(k)).equals("!"))
+										pda.push(productions.get(0).get(k));
+								}
+								output.add(d);
+
+							}
+
+						}
+					}
+				}
+			}
+		}
 	}
 
 	public static ArrayList<ArrayList<String>> splitProduction(ArrayList<String> production, grammer grammer) {
@@ -153,7 +188,7 @@ public class LL1Parser {
 		System.out.println();
 
 		parser(grammar, n.elements);
-//		printOutput(output);
+		 printOutput(output);
 
 	}
 }
