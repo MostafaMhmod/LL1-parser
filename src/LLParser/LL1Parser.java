@@ -220,12 +220,20 @@ public class LL1Parser {
 		}
 	}
 
+	public static String printRowInFile(String[] row) {
+		String out ="";
+		for (String i : row) {
+			out+= i + "		";
+		}
+		return out;
+	}
+
 	@SuppressWarnings("static-access")
 	public static void writeTableInFile(parseTable t) throws IOException {
 		PrintWriter out = new PrintWriter(new FileWriter("Table.out"));
 
 		for (String[] row : t.table) {
-			out.println(t.printRowInFile(row));
+			out.println(printRowInFile(row));
 		}
 		out.close();
 	}
@@ -243,6 +251,7 @@ public class LL1Parser {
 		t.filler(grammar);
 
 		printTable(t);
+		
 		writeTableInFile(t);
 		System.out.println();
 		System.out.println("NOW THE TABLE IS IN THE TABLE.OUT FILE");
